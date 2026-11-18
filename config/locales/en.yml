@@ -1,0 +1,31 @@
+en:
+  label_project_workspace: Project workspace
+  label_project_workspace_uncategorized: Uncategorized
+  label_project_workspace_projects: Projects
+  label_project_workspace_all_open: All open
+  label_project_workspace_in_progress: In progress only
+  label_project_workspace_assigned_to_me: Assigned to me
+  label_project_workspace_new_issue: New issue
+  label_project_workspace_search_projects: Search projects…
+  label_project_workspace_no_projects: No accessible projects
+  label_project_workspace_no_projects_hint: You have no visible active projects or no permission to view issues.
+  label_project_workspace_no_issues: No open issues
+  label_project_workspace_no_issues_hint: There are no open issues visible to you in this project.
+  label_project_workspace_empty_select: Select a project from the left
+  label_project_workspace_error: Failed to load
+  label_project_workspace_error_hint: The issue list could not be loaded. Please try again.
+  label_project_workspace_not_configured: The project category field is not configured
+  label_project_workspace_not_configured_hint: An administrator must select a project custom field under "Administration → Plugins → Redmine Project Workspace".
+  label_project_workspace_field_not_found: The configured project category field no longer exists
+  label_project_workspace_field_not_found_hint: The configured project custom field has been removed. Please ask an administrator to select another one.
+  label_project_workspace_field_multiple: The configured project category field is multi-valued
+  label_project_workspace_field_multiple_hint: The workspace requires a single-valued project custom field. Please ask an administrator to change it.
+  label_project_workspace_configuration: Project workspace configuration
+  label_project_workspace_custom_field: Project category field
+  label_project_workspace_custom_field_none: (none)
+  label_project_workspace_custom_field_help: Select a project custom field (a "list" format with a single value is recommended). The project tree is grouped by the field's options. Field names are never matched automatically.
+  label_project_workspace_custom_field_invalid: 'The selected field cannot be used: it must be a project custom field, with a list format and single-valued.'
+  label_project_workspace_show_all_issues: View all issues in Redmine
+  label_project_workspace_count: Open issues
+  label_project_workspace_loading: Loading…
+  label_project_workspace_tree: Project categories

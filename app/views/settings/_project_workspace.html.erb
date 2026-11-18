@@ -1,0 +1,27 @@
+<% selected_id = @settings['project_custom_field_id'].to_s %>
+<% options = ProjectCustomField.order(:name).map do |field|
+     label = "#{field.name} (##{field.id}, #{field.field_format}"
+     label += ", #{l(:field_multiple)}" if field.multiple?
+     label += ")"
+     [label, field.id.to_s]
+   end %>
+<% if selected_id.present? && ProjectCustomField.find_by(:id => selected_id).nil? %>
+  <% options << ["#{l(:label_project_workspace_field_not_found)} (##{selected_id})", selected_id] %>
+<% end %>
+
+<div class="box tabular">
+  <p>
+    <%= label_tag 'settings_project_custom_field_id', l(:label_project_workspace_custom_field) %>
+    <%= select_tag 'settings[project_custom_field_id]',
+                   options_for_select(options, selected_id),
+                   :include_blank => l(:label_project_workspace_custom_field_none) %>
+    <em class="info"><%= l(:label_project_workspace_custom_field_help) %></em>
+  </p>
+</div>
+
+<% field = selected_id.present? ? ProjectCustomField.find_by(:id => selected_id) : nil %>
+<% if field.nil? && selected_id.present? %>
+  <p class="warning"><%= l(:label_project_workspace_field_not_found_hint) %></p>
+<% elsif field && (field.multiple? || field.field_format != 'list') %>
+  <p class="warning"><%= l(:label_project_workspace_custom_field_invalid) %></p>
+<% end %>

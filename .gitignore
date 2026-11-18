@@ -1,0 +1,10 @@
+*.log
+.tmp/
+coverage/
+.idea/
+.vscode/
+.research/
+.dsh-acl-recovery/
+__pycache__/
+*.pyc
+script/_debug_*.py

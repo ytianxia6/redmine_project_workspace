@@ -1,0 +1,31 @@
+zh:
+  label_project_workspace: 项目工作台
+  label_project_workspace_uncategorized: 未分类
+  label_project_workspace_projects: 项目
+  label_project_workspace_all_open: 全部未关闭
+  label_project_workspace_in_progress: 仅进行中
+  label_project_workspace_assigned_to_me: 指派给我
+  label_project_workspace_new_issue: 新建任务
+  label_project_workspace_search_projects: 搜索项目…
+  label_project_workspace_no_projects: 没有可访问的项目
+  label_project_workspace_no_projects_hint: 您当前没有可见的活跃项目，或没有查看任务权限。
+  label_project_workspace_no_issues: 没有未关闭的任务
+  label_project_workspace_no_issues_hint: 该项目下没有当前用户可见的未关闭任务。
+  label_project_workspace_empty_select: 请选择左侧的项目
+  label_project_workspace_error: 加载失败
+  label_project_workspace_error_hint: 无法加载任务列表，请稍后重试。
+  label_project_workspace_not_configured: 项目分类字段尚未配置
+  label_project_workspace_not_configured_hint: 请管理员在「管理 → 插件 → Redmine Project Workspace」中选择用于分类的项目自定义字段。
+  label_project_workspace_field_not_found: 已配置的项目分类字段不存在
+  label_project_workspace_field_not_found_hint: 配置的项目自定义字段已被删除，请联系管理员重新选择。
+  label_project_workspace_field_multiple: 已配置的项目分类字段是多值字段
+  label_project_workspace_field_multiple_hint: 工作台要求使用单值的项目自定义字段，请管理员更换字段。
+  label_project_workspace_configuration: 项目工作台配置
+  label_project_workspace_custom_field: 项目分类字段
+  label_project_workspace_custom_field_none: （未选择）
+  label_project_workspace_custom_field_help: 选择一个「项目」类型的自定义字段（建议格式为「列表」且值唯一），左侧项目树将按该字段的选项分组。字段名称不会被自动推断。
+  label_project_workspace_custom_field_invalid: 当前选择的字段不可用：必须是项目自定义字段、格式为列表且非多值。
+  label_project_workspace_show_all_issues: 在 Redmine 中查看全部任务
+  label_project_workspace_count: 未关闭任务
+  label_project_workspace_loading: 加载中…
+  label_project_workspace_tree: 项目分类

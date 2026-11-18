@@ -1,0 +1,38 @@
+<% html_title l(:label_project_workspace) %>
+<%= context_menu %>
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'plugin_assets/redmine_project_workspace/project_workspace' %>
+  <%= javascript_include_tag 'plugin_assets/redmine_project_workspace/project_workspace' %>
+<% end %>
+
+<div id="ws-root" class="ws"
+     data-ws-endpoint="<%= project_workspace_issues_path %>"
+     data-ws-selected-project="<%= @project&.id %>">
+  <div class="ws-layout">
+    <aside class="ws-sidebar" aria-label="<%= l(:label_project_workspace_tree) %>">
+      <h2 class="ws-sidebar__title"><%= l(:label_project_workspace_tree) %></h2>
+      <%= render :partial => 'project_workspace/project_tree',
+                 :locals => { :groups_result => @groups_result,
+                              :field_problem => @field_problem,
+                              :field => @field,
+                              :selected_project => @project } %>
+    </aside>
+    <section class="ws-main" id="ws-main" aria-live="polite">
+      <% if @result %>
+        <%= render :partial => 'project_workspace/issues_panel',
+                   :locals => { :project => @project, :result => @result } %>
+      <% else %>
+        <div class="ws-empty">
+          <p class="ws-empty__title"><%= l(:label_project_workspace_empty_select) %></p>
+          <% if @field_problem %>
+            <p class="ws-empty__hint"><%= l(:label_project_workspace_not_configured_hint) %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </section>
+  </div>
+  <div class="ws-error" data-ws-error hidden role="alert">
+    <strong><%= l(:label_project_workspace_error) %></strong>
+    <span><%= l(:label_project_workspace_error_hint) %></span>
+  </div>
+</div>

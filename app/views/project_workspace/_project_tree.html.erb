@@ -1,0 +1,58 @@
+<% if field_problem %>
+  <div class="ws-message ws-message--warning">
+    <% case field_problem %>
+    <% when :not_configured %>
+      <p class="ws-message__title"><%= l(:label_project_workspace_not_configured) %></p>
+      <p class="ws-message__hint"><%= l(:label_project_workspace_not_configured_hint) %></p>
+    <% when :not_found %>
+      <p class="ws-message__title"><%= l(:label_project_workspace_field_not_found) %></p>
+      <p class="ws-message__hint"><%= l(:label_project_workspace_field_not_found_hint) %></p>
+    <% when :multiple %>
+      <p class="ws-message__title"><%= l(:label_project_workspace_field_multiple) %></p>
+      <p class="ws-message__hint"><%= l(:label_project_workspace_field_multiple_hint) %></p>
+    <% else %>
+      <p class="ws-message__title"><%= l(:label_project_workspace_not_configured) %></p>
+      <p class="ws-message__hint"><%= l(:label_project_workspace_custom_field_invalid) %></p>
+    <% end %>
+    <% if User.current.admin? %>
+      <p><%= link_to l(:button_configure), plugin_settings_path(:id => 'redmine_project_workspace') %></p>
+    <% end %>
+  </div>
+<% elsif groups_result.empty? %>
+  <div class="ws-empty ws-empty--sidebar">
+    <p class="ws-empty__title"><%= l(:label_project_workspace_no_projects) %></p>
+    <p class="ws-empty__hint"><%= l(:label_project_workspace_no_projects_hint) %></p>
+  </div>
+<% else %>
+  <div class="ws-tree" data-ws-tree>
+    <div class="ws-tree__search">
+      <input type="search" class="ws-tree__search-input" data-ws-project-search
+             placeholder="<%= l(:label_project_workspace_search_projects) %>"
+             aria-label="<%= l(:label_project_workspace_search_projects) %>">
+    </div>
+    <div class="ws-tree__groups">
+      <% groups_result.groups.each do |group| %>
+        <section class="ws-group" data-ws-group="<%= group.key %>">
+          <button type="button" class="ws-group__toggle" data-ws-group-toggle aria-expanded="true">
+            <span class="ws-group__arrow" aria-hidden="true">▸</span>
+            <span class="ws-group__label"><%= group.label %></span>
+            <span class="ws-group__count"><%= group.count %></span>
+          </button>
+          <ul class="ws-group__projects">
+            <% group.projects.each do |project| %>
+              <% selected = selected_project && project.id == selected_project.id %>
+              <li class="ws-project-item" data-ws-project-item data-project-name="<%= project.name %>">
+                <%= link_to project.name,
+                            project_workspace_path(:project_id => project.id),
+                            :class => ['ws-project', ('selected' if selected)].compact.join(' '),
+                            :data => { :project_id => project.id, :project_name => project.name },
+                            :'aria-current' => (selected ? 'true' : nil) %>
+              </li>
+            <% end %>
+          </ul>
+        </section>
+      <% end %>
+    </div>
+    <p class="ws-tree__no-match" data-ws-no-match hidden><%= l(:label_project_workspace_search_projects) %></p>
+  </div>
+<% end %>

@@ -1,0 +1,76 @@
+<% columns = ws_columns(result) %>
+<div class="ws-panel" data-ws-panel data-project-id="<%= project.id %>"
+     data-scope="<%= result.scope %>" data-per-page="<%= result.per_page %>">
+  <header class="ws-panel__header">
+    <div class="ws-panel__heading">
+      <h2 class="ws-panel__title"><%= link_to project.name, project_path(project) %></h2>
+      <span class="ws-panel__count">
+        <%= l(:label_project_workspace_count) %> <strong><%= result.count %></strong>
+      </span>
+    </div>
+    <div class="ws-panel__actions">
+      <%= link_to l(:label_project_workspace_show_all_issues),
+                  project_issues_path(project, :set_filter => 1, :status_id => '*'),
+                  :class => 'ws-panel__link' %>
+      <% if ws_new_issue_allowed?(project) %>
+        <%= link_to l(:label_project_workspace_new_issue),
+                    new_project_issue_path(project),
+                    :class => 'icon icon-add ws-new-issue' %>
+      <% end %>
+    </div>
+  </header>
+
+  <nav class="ws-filters" aria-label="<%= l(:label_filter_plural) %>">
+    <% ProjectWorkspaceHelper::SCOPES.each do |scope| %>
+      <%= ws_scope_link(project, result, scope) %>
+    <% end %>
+  </nav>
+
+  <% if result.count.zero? %>
+    <div class="ws-empty">
+      <p class="ws-empty__title"><%= l(:label_project_workspace_no_issues) %></p>
+      <p class="ws-empty__hint"><%= l(:label_project_workspace_no_issues_hint) %></p>
+      <% if ws_new_issue_allowed?(project) %>
+        <p><%= link_to l(:label_project_workspace_new_issue), new_project_issue_path(project), :class => 'icon icon-add' %></p>
+      <% end %>
+    </div>
+  <% else %>
+    <%= form_tag({}, :data => { :cm_url => issues_context_menu_path }) do %>
+      <%= hidden_field_tag 'back_url',
+                           project_workspace_path(:project_id => project.id,
+                                                  :scope => result.scope,
+                                                  :sort => result.sort_param),
+                           :id => nil %>
+      <div class="autoscroll ws-table-wrap">
+        <table class="list issues odd-even ws-table">
+          <thead>
+            <tr>
+              <th class="checkbox hide-when-print">
+                <%= check_box_tag 'check_all', '', false,
+                                  :class => 'toggle-selection',
+                                  :title => "#{l(:button_check_all)} / #{l(:button_uncheck_all)}" %>
+              </th>
+              <% columns.each do |column| %>
+                <th class="ws-col ws-col--<%= column %>"><%= ws_sort_link(project, result, column) %></th>
+              <% end %>
+              <th class="buttons hide-when-print"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% result.issues.each do |issue| %>
+              <tr id="issue-<%= issue.id %>"
+                  class="hascontextmenu <%= cycle('odd', 'even') %> <%= issue.css_classes %>">
+                <td class="checkbox hide-when-print"><%= check_box_tag 'ids[]', issue.id, false, :id => nil %></td>
+                <% columns.each do |column| %>
+                  <td class="ws-col ws-col--<%= column %>"><%= ws_cell_content(issue, column) %></td>
+                <% end %>
+                <td class="buttons hide-when-print"><%= link_to_context_menu %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+    <span class="pagination"><%= ws_pagination(project, result) %></span>
+  <% end %>
+</div>
